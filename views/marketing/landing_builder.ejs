@@ -1,0 +1,61 @@
+<!-- views/marketing/landing-builder.ejs -->
+<div class="container">
+    <h1>Landing Page Builder</h1>
+    
+    <div class="marketing-nav">
+        <a href="/marketing/dashboard">Dashboard</a>
+        <a href="/marketing/campaigns">Campaigns</a>
+        <a href="/marketing/social-poster">Social Poster</a>
+        <a href="/marketing/landing-builder" class="active">Landing Builder</a>
+        <a href="/marketing/analytics">Analytics</a>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <div style="background: white; padding: 1.5rem; border-radius: 10px;">
+            <h3>Create Landing Page</h3>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="landing-title" class="form-control" placeholder="Special Offer: Christian Posters">
+            </div>
+            <div class="form-group">
+                <label>Subtitle</label>
+                <input type="text" id="landing-subtitle" placeholder="Get 10% off your first order">
+            </div>
+            <div class="form-group">
+                <label>CTA Button Text</label>
+                <input type="text" id="cta-text" value="Shop Now">
+            </div>
+            <div class="form-group">
+                <label>CTA Link</label>
+                <input type="text" id="cta-link" value="/products">
+            </div>
+            <div class="form-group">
+                <label>Hero Image URL</label>
+                <input type="text" id="landing-image" placeholder="https://example.com/hero.jpg">
+            </div>
+            <div class="form-group">
+                <label>Color Scheme</label>
+                <select id="color-scheme">
+                    <option value="purple">Purple Theme</option>
+                    <option value="blue">Blue Theme</option>
+                    <option value="green">Green Theme</option>
+                </select>
+            </div>
+            <button id="build-landing-btn" class="btn btn-primary">Generate Landing Page</button>
+        </div>
+        
+        <div>
+            <div id="landing-result"></div>
+            <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                <h4>Tips for High-Converting Landing Pages</h4>
+                <ul>
+                    <li>Use clear, faith-based messaging</li>
+                    <li>Include customer testimonials</li>
+                    <li>Showcase bestselling posters</li>
+                    <li>Add urgency (limited time offer)</li>
+                    <li>Mobile-responsive design is essential</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
