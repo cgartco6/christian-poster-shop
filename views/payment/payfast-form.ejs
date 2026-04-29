@@ -1,0 +1,23 @@
+<!-- views/payment/payfast-form.ejs -->
+<div class="container">
+    <div style="max-width: 500px; margin: 0 auto;">
+        <h1>PayFast Payment</h1>
+        <p>Order: <%= order.orderId %></p>
+        <p>Amount: R<%= order.totalAmount %></p>
+        
+        <form action="https://sandbox.payfast.co.za/eng/process" method="POST">
+            <input type="hidden" name="merchant_id" value="<%= merchantId %>">
+            <input type="hidden" name="merchant_key" value="<%= process.env.PAYFAST_MERCHANT_KEY %>">
+            <input type="hidden" name="return_url" value="http://localhost:<%= process.env.PORT %>/payment/payfast/success">
+            <input type="hidden" name="cancel_url" value="http://localhost:<%= process.env.PORT %>/payment/payfast/cancel">
+            <input type="hidden" name="notify_url" value="http://localhost:<%= process.env.PORT %>/payment/payfast/notify">
+            <input type="hidden" name="amount" value="<%= order.totalAmount %>">
+            <input type="hidden" name="item_name" value="Christian Posters - Order <%= order.orderId %>">
+            <input type="hidden" name="email_confirmation" value="1">
+            <input type="hidden" name="confirmation_address" value="<%= order.customer.email %>">
+            <input type="hidden" name="m_payment_id" value="<%= order.orderId %>">
+            
+            <button type="submit" class="btn btn-primary">Pay with PayFast</button>
+        </form>
+    </div>
+</div>
