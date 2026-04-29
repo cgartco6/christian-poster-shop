@@ -193,3 +193,13 @@ router.get('/cancel', (req, res) => {
 });
 
 module.exports = router;
+
+// Inside routes/payment.js (add this route)
+const { getFnbEftDetails } = require('../services/paymentGateway');
+
+router.get('/eft/:orderId', (req, res) => {
+  const order = orders.find(o => o.orderId === req.params.orderId);
+  if (!order) return res.status(404).send('Order not found');
+  const eftDetails = getFnbEftDetails(order.orderId, order.totalAmount);
+  res.render('payment/eft-details', { title: 'Direct EFT (FNB)', order, eftDetails });
+});
