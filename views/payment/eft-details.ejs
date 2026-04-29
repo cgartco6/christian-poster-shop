@@ -1,0 +1,22 @@
+<!-- views/payment/eft-details.ejs -->
+<div class="container">
+    <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+        <h1>Direct EFT Payment</h1>
+        <div style="background: #f8f9fa; padding: 2rem; border-radius: 10px; margin: 2rem 0;">
+            <h3>Bank Transfer Details</h3>
+            <p><strong>Bank:</strong> <%= bankDetails.bank %></p>
+            <p><strong>Account Name:</strong> <%= bankDetails.accountName %></p>
+            <p><strong>Account Number:</strong> <%= bankDetails.accountNumber %></p>
+            <p><strong>Branch Code:</strong> <%= bankDetails.branchCode %></p>
+            <p><strong>Reference:</strong> <code><%= order.orderId %></code></p>
+            <p><strong>SWIFT:</strong> <%= bankDetails.swift %></p>
+        </div>
+        
+        <div class="alert alert-info">
+            <p>Please use your Order Number as reference when making payment.</p>
+            <p>Your order will be processed once payment is confirmed (usually within 24-48 hours).</p>
+        </div>
+        
+        <a href="/" class="btn btn-primary">Continue Shopping</a>
+    </div>
+</div>
