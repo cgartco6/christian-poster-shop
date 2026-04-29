@@ -3,305 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>HolyCanvas | Modern + Ethiopian Bible Posters | AI Agents</title>
+  <title>HolyCanvas | AI Biblical Poster Generator | Christian Art</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #fef9f0;
-      color: #1e1e2a;
-      line-height: 1.5;
-    }
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-    /* Header & Hamburger */
-    .header {
-      background: rgba(255,255,245,0.96);
-      backdrop-filter: blur(4px);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      border-bottom: 1px solid #f0e4d4;
-    }
-    .nav-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 0;
-      flex-wrap: wrap;
-    }
-    .logo h1 {
-      font-size: 1.7rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #8b5e3c, #b97f4b);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .logo span {
-      font-size: 0.8rem;
-      color: #7c6b5a;
-      display: block;
-    }
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.8rem;
-      cursor: pointer;
-      color: #8b5e3c;
-      padding: 0.5rem;
-    }
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-    }
-    .nav-links a {
-      text-decoration: none;
-      font-weight: 600;
-      color: #2d2f36;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover {
-      color: #8b5e3c;
-    }
-    .cart-icon {
-      position: relative;
-      cursor: pointer;
-      font-size: 1.4rem;
-    }
-    .cart-count {
-      position: absolute;
-      top: -10px;
-      right: -12px;
-      background: #c47b3e;
-      color: white;
-      border-radius: 40px;
-      padding: 2px 8px;
-      font-size: 0.7rem;
-      font-weight: bold;
-    }
-    /* Responsive navigation - FIXED */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #fef9f0; color: #1e1e2a; line-height: 1.5; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+    .header { background: rgba(255,255,245,0.96); backdrop-filter: blur(4px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #f0e4d4; }
+    .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; flex-wrap: wrap; }
+    .logo h1 { font-size: 1.7rem; font-weight: 800; background: linear-gradient(135deg, #8b5e3c, #b97f4b); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .logo span { font-size: 0.8rem; color: #7c6b5a; display: block; }
+    .menu-toggle { display: none; background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #8b5e3c; padding: 0.5rem; }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a { text-decoration: none; font-weight: 600; color: #2d2f36; transition: color 0.2s; }
+    .nav-links a:hover { color: #8b5e3c; }
+    .cart-icon { position: relative; cursor: pointer; font-size: 1.4rem; }
+    .cart-count { position: absolute; top: -10px; right: -12px; background: #c47b3e; color: white; border-radius: 40px; padding: 2px 8px; font-size: 0.7rem; font-weight: bold; }
     @media (max-width: 768px) {
-      .menu-toggle {
-        display: block;
-      }
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        background: white;
-        padding: 1rem 0;
-        gap: 1rem;
-        margin-top: 1rem;
-        border-radius: 20px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        z-index: 101;
-      }
-      /* No .show class needed – we use inline style */
+      .menu-toggle { display: block; }
+      .nav-links { display: none; flex-direction: column; width: 100%; background: white; padding: 1rem 0; gap: 1rem; margin-top: 1rem; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); z-index: 101; }
+      .nav-links.show { display: flex; }
+      .nav-bar { flex-wrap: wrap; }
     }
-    /* Hero section */
-    .hero {
-      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=2070&auto=format');
-      background-size: cover;
-      background-position: center 30%;
-      border-radius: 32px;
-      margin: 2rem 0;
-      padding: 5rem 2rem;
-      text-align: center;
-      color: white;
-    }
-    .hero h2 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    }
-    .hero p {
-      font-size: 1.2rem;
-      max-width: 600px;
-      margin: 0 auto;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-    }
-    /* Buttons & Cards */
-    .btn {
-      display: inline-block;
-      padding: 0.7rem 1.5rem;
-      border-radius: 40px;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      transition: 0.2s;
-    }
-    .btn-primary {
-      background: #8b5e3c;
-      color: white;
-    }
-    .btn-primary:hover {
-      background: #6b462a;
-      transform: translateY(-2px);
-    }
-    .btn-outline {
-      border: 1.5px solid #8b5e3c;
-      background: transparent;
-      color: #8b5e3c;
-    }
-    .section {
-      margin: 3rem 0;
-      scroll-margin-top: 80px;
-    }
-    .section-title {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      border-left: 5px solid #c49a6c;
-      padding-left: 1rem;
-    }
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 2rem;
-    }
-    .product-card {
-      background: white;
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-      transition: 0.2s;
-    }
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-    }
-    .product-img {
-      width: 100%;
-      aspect-ratio: 3/4;
-      object-fit: cover;
-      background: #e9dfd1;
-    }
-    .product-info {
-      padding: 1rem;
-    }
-    .product-title {
-      font-weight: 800;
-    }
-    .price {
-      font-weight: 800;
-      font-size: 1.3rem;
-      color: #8b5e3c;
-      margin: 0.4rem 0;
-    }
-    .cart-section, .checkout-section, .agent-card {
-      background: white;
-      border-radius: 32px;
-      padding: 1.5rem;
-      margin-top: 2rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-    }
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #f0e4d4;
-      padding: 1rem 0;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .payment-methods {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin: 1rem 0;
-    }
-    .payment-option {
-      background: #f5ede4;
-      padding: 0.6rem 1.2rem;
-      border-radius: 60px;
-      cursor: pointer;
-      font-weight: 500;
-    }
-    .payment-option.selected {
-      background: #8b5e3c;
-      color: white;
-    }
-    .agent-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 2rem;
-      margin-top: 1rem;
-    }
-    .book-selector {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin: 1rem 0;
-      max-height: 200px;
-      overflow-y: auto;
-      padding: 0.5rem;
-      border: 1px solid #f0e4d4;
-      border-radius: 20px;
-      background: white;
-    }
-    .book-btn {
-      background: #f5ede4;
-      border: none;
-      padding: 0.3rem 0.8rem;
-      border-radius: 40px;
-      cursor: pointer;
-      font-size: 0.8rem;
-    }
-    .book-btn.selected {
-      background: #8b5e3c;
-      color: white;
-    }
-    .generated-preview {
-      background: #2c241a;
-      color: #f5e6d3;
-      padding: 1rem;
-      border-radius: 24px;
-      margin-top: 1rem;
-      text-align: center;
-    }
-    .toast-msg {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #1f2c1d;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 60px;
-      z-index: 1000;
-      animation: fadein 0.3s;
-    }
-    @keyframes fadein {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    footer {
-      background: #2c241a;
-      color: #ddd;
-      padding: 2rem;
-      text-align: center;
-      margin-top: 4rem;
-      border-radius: 32px 32px 0 0;
-    }
-    input, textarea, select {
-      width: 100%;
-      padding: 0.7rem;
-      border-radius: 20px;
-      border: 1px solid #e2d5c6;
-      font-family: inherit;
-      margin-top: 0.3rem;
-    }
+    .hero { background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=2070&auto=format'); background-size: cover; background-position: center 30%; border-radius: 32px; margin: 2rem 0; padding: 5rem 2rem; text-align: center; color: white; }
+    .hero h2 { font-size: 2.5rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+    .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+    .btn { display: inline-block; padding: 0.7rem 1.5rem; border-radius: 40px; font-weight: 600; cursor: pointer; border: none; transition: 0.2s; }
+    .btn-primary { background: #8b5e3c; color: white; }
+    .btn-primary:hover { background: #6b462a; transform: translateY(-2px); }
+    .btn-outline { border: 1.5px solid #8b5e3c; background: transparent; color: #8b5e3c; }
+    .section { margin: 3rem 0; scroll-margin-top: 80px; }
+    .section-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 1.5rem; border-left: 5px solid #c49a6c; padding-left: 1rem; }
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2rem; }
+    .product-card { background: white; border-radius: 28px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.05); transition: 0.2s; }
+    .product-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+    .product-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; background: #e9dfd1; }
+    .product-info { padding: 1rem; }
+    .product-title { font-weight: 800; }
+    .price { font-weight: 800; font-size: 1.3rem; color: #8b5e3c; margin: 0.4rem 0; }
+    .cart-section, .checkout-section, .agent-card { background: white; border-radius: 32px; padding: 1.5rem; margin-top: 2rem; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0e4d4; padding: 1rem 0; flex-wrap: wrap; gap: 10px; }
+    .payment-methods { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1rem 0; }
+    .payment-option { background: #f5ede4; padding: 0.6rem 1.2rem; border-radius: 60px; cursor: pointer; font-weight: 500; }
+    .payment-option.selected { background: #8b5e3c; color: white; }
+    .agent-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; margin-top: 1rem; }
+    .book-selector { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; max-height: 200px; overflow-y: auto; padding: 0.5rem; border: 1px solid #f0e4d4; border-radius: 20px; background: white; }
+    .book-btn { background: #f5ede4; border: none; padding: 0.3rem 0.8rem; border-radius: 40px; cursor: pointer; font-size: 0.8rem; }
+    .book-btn.selected { background: #8b5e3c; color: white; }
+    .generated-preview { background: #2c241a; color: #f5e6d3; padding: 1rem; border-radius: 24px; margin-top: 1rem; text-align: center; }
+    .toast-msg { position: fixed; bottom: 20px; right: 20px; background: #1f2c1d; color: white; padding: 12px 24px; border-radius: 60px; z-index: 1000; animation: fadein 0.3s; }
+    @keyframes fadein { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    footer { background: #2c241a; color: #ddd; padding: 2rem; text-align: center; margin-top: 4rem; border-radius: 32px 32px 0 0; }
+    input, textarea, select { width: 100%; padding: 0.7rem; border-radius: 20px; border: 1px solid #e2d5c6; font-family: inherit; margin-top: 0.3rem; }
   </style>
 </head>
 <body>
@@ -309,92 +63,77 @@
 <div class="header">
   <div class="container">
     <div class="nav-bar">
-      <div class="logo">
-        <h1>✝️ HolyCanvas</h1>
-        <span>Modern + Ethiopian Bible | AI Art</span>
-      </div>
-      <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+      <div class="logo"><h1>✝️ HolyCanvas</h1><span>AI Biblical Art | 66+22 Bible Books</span></div>
+      <button class="menu-toggle" id="menuToggle">☰</button>
       <div class="nav-links" id="navLinks">
-        <a href="#products">📸 Posters (25)</a>
-        <a href="#modern-bible">📖 Modern Bible (66)</a>
-        <a href="#ethiopian-bible">📜 Ethiopian +22 Removed</a>
-        <a href="#ai-agents">🤖 AI Agents</a>
-        <a href="#checkout">💳 Checkout</a>
-        <div class="cart-icon">
-          <i class="fas fa-shopping-cart"></i>
-          <span class="cart-count" id="cartCountBadge">0</span>
-        </div>
+        <a href="#products">Posters</a>
+        <a href="#modern-bible">Modern Bible</a>
+        <a href="#ethiopian-bible">Ethiopian +22</a>
+        <a href="#ai-agents">AI Agents</a>
+        <a href="#checkout">Checkout</a>
+        <div class="cart-icon"><i class="fas fa-shopping-cart"></i><span class="cart-count" id="cartCountBadge">0</span></div>
       </div>
     </div>
   </div>
 </div>
 
 <main class="container">
-  <!-- HERO SECTION with beautiful image -->
   <div class="hero">
-    <h2>Sacred Art. Infinite Inspiration.</h2>
-    <p>Explore every book of the Bible – modern canon and ancient Ethiopian texts. Generate unique HD posters or upload your own. All posters R50.</p>
-    <button class="btn-primary" style="margin-top: 1.5rem;" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button>
+    <h2>Biblical Art. Infinite Inspiration.</h2>
+    <p>Generate posters for any Bible theme: Armor of God, Fruit of the Spirit, Jesus walks on water, or your own prompt.</p>
+    <button class="btn-primary" style="margin-top:1.5rem;" onclick="document.getElementById('ai-agents').scrollIntoView({behavior:'smooth'})">Try AI Generator</button>
   </div>
 
-  <!-- Products section: replace with your 25 PNGs -->
+  <!-- 25 product placeholders (replace with your PNGs) -->
   <section id="products" class="section">
     <div class="section-title"><i class="fas fa-cross"></i> 25 Biblical Posters (replace with your PNGs)</div>
     <div id="productsGrid" class="products-grid"></div>
-    <p style="font-size:0.8rem; margin-top:1rem;"><i class="fas fa-info-circle"></i> To add your own photos: edit <strong>productsData</strong> in the JavaScript – set <code>image: "your-poster.png"</code> and place PNGs in same folder.</p>
+    <p style="font-size:0.8rem; margin-top:1rem;"><i class="fas fa-info-circle"></i> Edit <strong>productsData</strong> in JS to add your own images.</p>
   </section>
 
-  <!-- Cart summary -->
+  <!-- Cart -->
   <div class="cart-section">
-    <div style="display: flex; justify-content: space-between;">
-      <h3><i class="fas fa-shopping-basket"></i> Your Cart</h3>
-      <button id="clearCartBtn" class="btn-outline" style="padding:0.3rem 1rem;">Clear</button>
-    </div>
-    <div id="cartItemsList">Cart is empty</div>
-    <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
-      <strong>Total:</strong>
-      <span id="cartTotalPrice">R0.00</span>
-    </div>
-    <button id="scrollToCheckoutBtn" class="btn-primary" style="margin-top:1rem; width:100%">Proceed to Checkout ↓</button>
+    <div style="display:flex; justify-content:space-between;"><h3>🛒 Your Cart</h3><button id="clearCartBtn" class="btn-outline">Clear</button></div>
+    <div id="cartItemsList">Cart empty</div>
+    <div style="display:flex; justify-content:space-between; margin-top:1rem;"><strong>Total:</strong><span id="cartTotalPrice">R0.00</span></div>
+    <button id="scrollToCheckoutBtn" class="btn-primary" style="width:100%; margin-top:1rem;">Checkout ↓</button>
   </div>
 
-  <!-- Section: Modern Bible (66 books) -->
+  <!-- Modern Bible 66 books -->
   <section id="modern-bible" class="section">
-    <div class="section-title"><i class="fas fa-bible"></i> 📜 Modern Bible – 66 Books (Protestant Canon)</div>
+    <div class="section-title">📜 Modern Bible – 66 Books</div>
     <div class="agent-card">
-      <h3>Select a book from Genesis to Revelation</h3>
       <div id="bibleBooksContainer" class="book-selector"></div>
       <button id="generateCanonPosterBtn" class="btn-primary">Generate Visual Summary Poster</button>
       <div id="canonPosterPreview" class="generated-preview" style="display:none;"></div>
     </div>
   </section>
 
-  <!-- Section: Ethiopian Bible – 22 additional books (removed from modern Bible) -->
+  <!-- Ethiopian +22 removed books -->
   <section id="ethiopian-bible" class="section">
-    <div class="section-title"><i class="fas fa-book-open"></i> 📚 Ancient Ethiopian Bible – 22 Books Removed from Modern Bibles</div>
+    <div class="section-title">📚 Ethiopian Bible – 22 Removed Books</div>
     <div class="agent-card">
-      <h3>These books are part of the 88‑book Ethiopian Orthodox canon</h3>
       <div id="ethiopianBooksContainer" class="book-selector"></div>
-      <button id="generateEthiopianPosterBtn" class="btn-primary">Generate Poster for Selected Book</button>
+      <button id="generateEthiopianPosterBtn" class="btn-primary">Generate Poster</button>
       <div id="ethiopianPreview" class="generated-preview" style="display:none;"></div>
-      <p style="font-size:0.7rem; margin-top:0.5rem;">Includes <strong>1 Enoch, Jubilees, 1‑3 Meqabyan (Ethiopian Maccabees), etc.</strong> – historically significant texts.</p>
+      <p style="font-size:0.7rem; margin-top:0.5rem;">Includes 1 Enoch, Jubilees, etc.</p>
     </div>
   </section>
 
-  <!-- AI Agents: Infinite HD Poster Generator -->
+  <!-- AI Agents – biblical prompt generator -->
   <section id="ai-agents" class="section">
-    <div class="section-title"><i class="fas fa-robot"></i> 🤖 AI Art Agents</div>
+    <div class="section-title">🤖 AI Biblical Art Generator</div>
     <div class="agent-grid">
       <div class="agent-card">
-        <h3><i class="fas fa-magic"></i> Infinite HD Poster Agent</h3>
-        <p>Creates unique, never‑repeating A1‑size HD Christian art. Each click generates a new design ready for print.</p>
-        <button id="generatePosterBtn" class="btn-primary">Generate Unique Poster</button>
+        <h3><i class="fas fa-magic"></i> Infinite HD Poster (your prompt)</h3>
+        <p>Describe the biblical scene or theme you want (e.g., "Armor of God", "Fruit of the Spirit", "Jesus calms the storm").</p>
+        <input type="text" id="aiPrompt" placeholder="e.g., Armor of God with sword, shield, breastplate" value="Armor of God – full spiritual armor">
+        <button id="generatePosterBtn" class="btn-primary" style="margin-top:0.5rem;">Generate Biblical Poster</button>
         <div id="aiPosterPreview" class="generated-preview" style="display:none;"></div>
       </div>
       <div class="agent-card">
         <h3><i class="fas fa-palette"></i> Bible‑to‑Picture Agent</h3>
-        <p>Summarises any Bible book (modern or Ethiopian) into a visual poster. Perfect for learning & memorisation.</p>
-        <p style="font-size:0.8rem;">Use the selectors above to generate books from either canon.</p>
+        <p>Pick any book above – AI will create a visual summary with key themes.</p>
       </div>
     </div>
   </section>
@@ -410,96 +149,50 @@
         <textarea id="address" rows="2" placeholder="Delivery address" required></textarea>
       </div>
       <div><strong>Payment Method</strong></div>
-      <div class="payment-methods" id="paymentMethods">
-        <div data-method="payfast" class="payment-option">💳 PayFast</div>
-        <div data-method="stripe" class="payment-option">💎 Stripe</div>
-        <div data-method="paypal" class="payment-option">🅿️ PayPal</div>
-        <div data-method="eft" class="payment-option selected">🏦 Direct EFT → FNB (SA)</div>
+      <div class="payment-methods">
+        <div data-method="payfast" class="payment-option">PayFast</div>
+        <div data-method="stripe" class="payment-option">Stripe</div>
+        <div data-method="paypal" class="payment-option">PayPal</div>
+        <div data-method="eft" class="payment-option selected">Direct EFT → FNB</div>
       </div>
       <input type="hidden" id="selectedPayment" value="eft">
       <div id="fnbDetails" style="background:#f8f2ea; padding:1rem; border-radius:20px; margin:1rem 0;">
         <strong>🏦 FNB Bank Transfer Details:</strong><br>
-        Account Name: Christian Poster Shop CC<br>
-        Account Number: 62847900234<br>
-        Branch Code: 250655<br>
-        SWIFT: FIRNZAJJ<br>
+        Account: Christian Poster Shop CC | 62847900234 | Branch 250655 | SWIFT FIRNZAJJ<br>
         <span id="orderRefDemo">Reference: HOLY-XXXXX</span>
       </div>
       <button type="submit" class="btn-primary" style="width:100%">Place Order (Demo)</button>
     </form>
   </section>
 </main>
-
-<footer>
-  <p>✝️ HolyCanvas — Complete Bible Poster Set | 66 + 22 Books | R50 each</p>
-  <p>📧 hello@holycanvas.co.za | (+27) 123 456 789</p>
-</footer>
+<footer>✝️ HolyCanvas — AI‑powered Biblical art | R50 each | EFT to FNB</footer>
 
 <script>
-  // ---------- 1. MODERN BIBLE (66 books) ----------
-  const modernBooks = [
-    "Genesis","Exodus","Leviticus","Numbers","Deuteronomy","Joshua","Judges","Ruth","1 Samuel","2 Samuel","1 Kings","2 Kings","1 Chronicles","2 Chronicles","Ezra","Nehemiah","Esther","Job","Psalms","Proverbs","Ecclesiastes","Song of Solomon","Isaiah","Jeremiah","Lamentations","Ezekiel","Daniel","Hosea","Joel","Amos","Obadiah","Jonah","Micah","Nahum","Habakkuk","Zephaniah","Haggai","Zechariah","Malachi","Matthew","Mark","Luke","John","Acts","Romans","1 Corinthians","2 Corinthians","Galatians","Ephesians","Philippians","Colossians","1 Thessalonians","2 Thessalonians","1 Timothy","2 Timothy","Titus","Philemon","Hebrews","James","1 Peter","2 Peter","1 John","2 John","3 John","Jude","Revelation"
-  ];
+  // ---------- BIBLE BOOK LISTS ----------
+  const modernBooks = ["Genesis","Exodus","Leviticus","Numbers","Deuteronomy","Joshua","Judges","Ruth","1 Samuel","2 Samuel","1 Kings","2 Kings","1 Chronicles","2 Chronicles","Ezra","Nehemiah","Esther","Job","Psalms","Proverbs","Ecclesiastes","Song of Solomon","Isaiah","Jeremiah","Lamentations","Ezekiel","Daniel","Hosea","Joel","Amos","Obadiah","Jonah","Micah","Nahum","Habakkuk","Zephaniah","Haggai","Zechariah","Malachi","Matthew","Mark","Luke","John","Acts","Romans","1 Corinthians","2 Corinthians","Galatians","Ephesians","Philippians","Colossians","1 Thessalonians","2 Thessalonians","1 Timothy","2 Timothy","Titus","Philemon","Hebrews","James","1 Peter","2 Peter","1 John","2 John","3 John","Jude","Revelation"];
+  const ethiopianBooks = ["1 Enoch (Ethiopic)","2 Enoch","3 Enoch","Jubilees","1 Meqabyan","2 Meqabyan","3 Meqabyan","1 Baruch","2 Baruch","4 Baruch","Tobit","Judith","Wisdom of Solomon","Sirach","1 Esdras","2 Esdras","Prayer of Manasseh","Psalm 151","Additions to Daniel","Additions to Esther","Letter of Jeremiah","Joseph and Aseneth"];
 
-  // ---------- 2. ETHIOPIAN BIBLE – 22 ADDITIONAL BOOKS (removed from modern Protestant canon) ----------
-  const ethiopianBooks = [
-    "1 Enoch (Ethiopic)", "2 Enoch (Slavonic)", "3 Enoch (Hebrew)", "Jubilees",
-    "1 Meqabyan (Ethiopian Maccabees)", "2 Meqabyan", "3 Meqabyan",
-    "1 Baruch (Ethiopic)", "2 Baruch (Syriac)", "4 Baruch (Paralipomena of Jeremiah)",
-    "Tobit", "Judith", "Wisdom of Solomon", "Sirach (Ecclesiasticus)",
-    "1 Esdras", "2 Esdras", "Prayer of Manasseh", "Psalm 151",
-    "Additions to Daniel (Susanna, Bel & Dragon)", "Additions to Esther",
-    "Letter of Jeremiah", "Joseph and Aseneth"
-  ];
-
-  // ---------- 3. PRODUCTS DATA (25 placeholders – replace with your PNGs) ----------
+  // ---------- PRODUCTS (replace with your PNGs) ----------
   let productsData = [];
   for (let i = 1; i <= 25; i++) {
-    productsData.push({
-      id: i,
-      name: `Biblical Poster ${i}`,
-      verse: "Scripture verse",
-      price: 50,
-      image: `https://placehold.co/400x500/f0e4d4/8b5e3c?text=Poster+${i}`
-    });
+    productsData.push({ id: i, name: `Biblical Poster ${i}`, verse: "Scripture verse", price: 50, image: `https://placehold.co/400x500/f0e4d4/8b5e3c?text=Poster+${i}` });
   }
 
-  // ---------- CART LOGIC ----------
-  let cart = JSON.parse(localStorage.getItem('holy_cart_full')) || { items: [], totalQty: 0, totalPrice: 0 };
-  function saveCart() { localStorage.setItem('holy_cart_full', JSON.stringify(cart)); updateCartUI(); }
+  // ---------- CART ----------
+  let cart = JSON.parse(localStorage.getItem('holy_cart')) || { items: [], totalQty: 0, totalPrice: 0 };
+  function saveCart() { localStorage.setItem('holy_cart', JSON.stringify(cart)); updateCartUI(); }
   function updateCartUI() {
     const container = document.getElementById('cartItemsList');
-    if (!cart.items.length) {
-      container.innerHTML = '<div style="padding:2rem; text-align:center;">🛒 Your cart is empty. Add posters!</div>';
-      document.getElementById('cartTotalPrice').innerText = 'R0.00';
-      document.getElementById('cartCountBadge').innerText = '0';
-      return;
-    }
+    if (!cart.items.length) { container.innerHTML = '<div style="padding:2rem;text-align:center;">Cart empty</div>'; document.getElementById('cartTotalPrice').innerText = 'R0.00'; document.getElementById('cartCountBadge').innerText = '0'; return; }
     let html = '';
     cart.items.forEach(item => {
-      html += `<div class="cart-item">
-        <div><strong>${item.name}</strong><br><small>${item.verse || ''}</small></div>
-        <div>R${item.price} x ${item.qty}</div>
-        <div>R${item.price * item.qty}</div>
-        <div>
-          <button class="btn-outline" data-id="${item.id}" data-op="inc">+</button>
-          <span style="margin:0 8px;">${item.qty}</span>
-          <button class="btn-outline" data-id="${item.id}" data-op="dec">-</button>
-          <button class="btn-outline" data-id="${item.id}" data-op="remove">🗑️</button>
-        </div>
-      </div>`;
+      html += `<div class="cart-item"><div><strong>${item.name}</strong><br><small>${item.verse||''}</small></div><div>R${item.price} x ${item.qty}</div><div>R${item.price*item.qty}</div><div><button class="btn-outline" data-id="${item.id}" data-op="inc">+</button><span style="margin:0 8px;">${item.qty}</span><button class="btn-outline" data-id="${item.id}" data-op="dec">-</button><button class="btn-outline" data-id="${item.id}" data-op="remove">🗑️</button></div></div>`;
     });
     container.innerHTML = html;
     document.getElementById('cartTotalPrice').innerText = `R${cart.totalPrice}`;
     document.getElementById('cartCountBadge').innerText = cart.totalQty;
     document.querySelectorAll('[data-op]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const id = parseInt(btn.dataset.id);
-        const op = btn.dataset.op;
-        if (op === 'inc') modifyQty(id, 1);
-        else if (op === 'dec') modifyQty(id, -1);
-        else if (op === 'remove') modifyQty(id, -999);
-      });
+      btn.addEventListener('click', (e) => { const id = parseInt(btn.dataset.id); const op = btn.dataset.op; if (op==='inc') modifyQty(id,1); else if (op==='dec') modifyQty(id,-1); else if (op==='remove') modifyQty(id,-999); });
     });
   }
   function modifyQty(id, delta) {
@@ -518,177 +211,58 @@
     showToast(`✨ ${product.name} added to cart`);
   }
   function recalcTotals() {
-    cart.totalQty = cart.items.reduce((s, i) => s + i.qty, 0);
-    cart.totalPrice = cart.items.reduce((s, i) => s + (i.price * i.qty), 0);
+    cart.totalQty = cart.items.reduce((s,i)=>s+i.qty,0);
+    cart.totalPrice = cart.items.reduce((s,i)=>s+(i.price*i.qty),0);
   }
   function clearCart() { cart = { items: [], totalQty: 0, totalPrice: 0 }; saveCart(); showToast("Cart cleared"); }
-  function showToast(msg) { const t = document.createElement('div'); t.className = 'toast-msg'; t.innerText = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 3000); }
+  function showToast(msg) { const t = document.createElement('div'); t.className = 'toast-msg'; t.innerText = msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
 
   // Render product grid
   function renderProducts() {
     const grid = document.getElementById('productsGrid');
-    grid.innerHTML = productsData.map(p => `
-      <div class="product-card">
-        <img class="product-img" src="${p.image}" alt="${p.name}" onerror="this.src='https://placehold.co/400x500/f0e4d4/8b5e3c?text=Missing'">
-        <div class="product-info">
-          <div class="product-title">${p.name}</div>
-          <div class="price">R${p.price}</div>
-          <button class="btn-primary add-cart-btn" data-id="${p.id}">Add to Cart</button>
-        </div>
-      </div>
-    `).join('');
-    document.querySelectorAll('.add-cart-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = parseInt(btn.dataset.id);
-        const prod = productsData.find(p => p.id === id);
-        if (prod) addToCart(prod);
-      });
-    });
+    grid.innerHTML = productsData.map(p => `<div class="product-card"><img class="product-img" src="${p.image}" alt="${p.name}" onerror="this.src='https://placehold.co/400x500/f0e4d4/8b5e3c?text=Missing'"><div class="product-info"><div class="product-title">${p.name}</div><div class="price">R${p.price}</div><button class="btn-primary add-cart-btn" data-id="${p.id}">Add to Cart</button></div></div>`).join('');
+    document.querySelectorAll('.add-cart-btn').forEach(btn => btn.addEventListener('click', () => { const id = parseInt(btn.dataset.id); const prod = productsData.find(p=>p.id===id); if(prod) addToCart(prod); }));
   }
 
-  // Helper to populate book selectors
+  // Populate book selectors
   function populateBooks(containerId, booksArray) {
     const container = document.getElementById(containerId);
     container.innerHTML = booksArray.map(book => `<button class="book-btn" data-book="${book}">${book}</button>`).join('');
-    container.querySelectorAll('.book-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        container.querySelectorAll('.book-btn').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected');
-      });
-    });
+    container.querySelectorAll('.book-btn').forEach(btn => btn.addEventListener('click', () => { container.querySelectorAll('.book-btn').forEach(b=>b.classList.remove('selected')); btn.classList.add('selected'); }));
   }
 
-  // Generate poster for any book (with random image)
-  function generateBookPoster(book, previewDivId) {
+  // ---------- BIBLICAL IMAGE GENERATION (keyword-based, realistic) ----------
+  function getBiblicalImageUrl(prompt) {
+    // Map common biblical themes to specific unsplash / religious art images
+    const promptLower = prompt.toLowerCase();
+    if (promptLower.includes("armor of god")) return "https://images.unsplash.com/photo-1504805572947-34fad45aed93?w=500&h=600&fit=crop"; // warrior/shield concept
+    if (promptLower.includes("fruit of the spirit")) return "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&h=600&fit=crop"; // fruit basket
+    if (promptLower.includes("jesus walks on water") || promptLower.includes("walk on water")) return "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=500&h=600&fit=crop"; // stormy sea
+    if (promptLower.includes("good shepherd")) return "https://images.unsplash.com/photo-1504280317859-c2d6d5b2a3b7?w=500&h=600&fit=crop"; // sheep
+    if (promptLower.includes("creation")) return "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=500&h=600&fit=crop"; // cosmos
+    if (promptLower.includes("exodus") || promptLower.includes("red sea")) return "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&h=600&fit=crop"; // sea
+    if (promptLower.includes("ten commandments")) return "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?w=500&h=600&fit=crop"; // stone tablets
+    if (promptLower.includes("nativity") || promptLower.includes("birth of jesus")) return "https://images.unsplash.com/photo-1487754180451-4563872e97cf?w=500&h=600&fit=crop"; // starry night
+    if (promptLower.includes("resurrection")) return "https://images.unsplash.com/photo-1504280317859-c2d6d5b2a3b7?w=500&h=600&fit=crop"; // empty tomb concept
+    if (promptLower.includes("pentecost")) return "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?w=500&h=600&fit=crop"; // fire
+    if (promptLower.includes("prodigal son")) return "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=500&h=600&fit=crop"; // embrace
+    if (promptLower.includes("last supper")) return "https://images.unsplash.com/photo-1527295116394-9a9e0861a1e1?w=500&h=600&fit=crop"; // table
+    // Default: return a high-quality Christian cross or Bible image
+    return "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=500&h=600&fit=crop";
+  }
+
+  function generateBiblicalPoster(prompt, previewDivId, customName = null) {
     const previewDiv = document.getElementById(previewDivId);
     previewDiv.style.display = 'block';
-    const randomImgId = Math.floor(Math.random() * 200) + 1;
+    const imageUrl = getBiblicalImageUrl(prompt);
+    const posterName = customName || `AI: ${prompt.substring(0, 40)}`;
     previewDiv.innerHTML = `
-      <i class="fas fa-scroll"></i> <strong>${book}</strong> – Visual Summary Poster<br>
-      <img src="https://picsum.photos/id/${randomImgId}/400/500" style="width:100%; border-radius:16px; margin:10px 0;">
-      <p>📖 Key themes, major events, and memory verse illustrated.<br>Perfect for display or study.</p>
+      <i class="fas fa-cross"></i> <strong>${posterName}</strong><br>
+      <img src="${imageUrl}" style="width:100%; border-radius:16px; margin:10px 0; object-fit:cover; max-height:300px;">
+      <p>📖 "${prompt}" – AI‑generated biblical artwork.</p>
       <button class="btn-outline add-cart-generated">Add to Cart (R50)</button>
+      <p style="font-size:0.7rem; margin-top:0.5rem;"><i class="fas fa-info-circle"></i> In production, this would call DALL‑E / Stable Diffusion with your exact prompt.</p>
     `;
     previewDiv.querySelector('.add-cart-generated')?.addEventListener('click', () => {
       const generatedPoster = {
-        id: Date.now() + Math.random(),
-        name: `${book} Visual Summary`,
-        verse: "AI‑generated Bible guide",
-        price: 50,
-        image: `https://picsum.photos/id/${randomImgId}/400/500`
-      };
-      addToCart(generatedPoster);
-    });
-  }
-
-  // ---------- Event Listeners ----------
-  document.getElementById('generateCanonPosterBtn').addEventListener('click', () => {
-    const selected = document.querySelector('#bibleBooksContainer .book-btn.selected');
-    if (!selected) { showToast("Please select a book from the Modern Bible list"); return; }
-    generateBookPoster(selected.dataset.book, 'canonPosterPreview');
-  });
-  document.getElementById('generateEthiopianPosterBtn').addEventListener('click', () => {
-    const selected = document.querySelector('#ethiopianBooksContainer .book-btn.selected');
-    if (!selected) { showToast("Please select a book from the Ethiopian Bible list"); return; }
-    generateBookPoster(selected.dataset.book, 'ethiopianPreview');
-  });
-
-  // Infinite HD Poster Agent
-  document.getElementById('generatePosterBtn').addEventListener('click', () => {
-    const preview = document.getElementById('aiPosterPreview');
-    preview.style.display = 'block';
-    const randomId = Math.floor(Math.random() * 10000);
-    const styles = ['Watercolor', 'Oil painting', 'Digital calligraphy', 'Stained glass', 'Vintage print'];
-    preview.innerHTML = `
-      <i class="fas fa-spinner fa-spin"></i> Generating unique A1 poster...<br>
-      <img src="https://picsum.photos/id/${Math.floor(Math.random()*200)+1}/400/500" style="width:100%; border-radius:16px; margin-top:10px;">
-      <p><strong>✨ Never‑repeating HD design ✨</strong><br>Style: ${styles[Math.floor(Math.random()*styles.length)]}<br>
-      <button class="btn-outline" id="addUniqueCart">Add to Cart (R50)</button></p>
-    `;
-    document.getElementById('addUniqueCart')?.addEventListener('click', () => {
-      const uniquePoster = {
-        id: 90000 + randomId,
-        name: `AI Unique Poster ${randomId}`,
-        verse: "Generative art",
-        price: 50,
-        image: `https://picsum.photos/id/${Math.floor(Math.random()*200)+1}/400/500`
-      };
-      addToCart(uniquePoster);
-    });
-  });
-
-  // Payment method selection
-  document.querySelectorAll('.payment-option').forEach(opt => {
-    opt.addEventListener('click', function() {
-      document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
-      this.classList.add('selected');
-      document.getElementById('selectedPayment').value = this.dataset.method;
-      document.getElementById('fnbDetails').style.display = this.dataset.method === 'eft' ? 'block' : 'none';
-    });
-  });
-
-  // Checkout form submission
-  document.getElementById('checkoutForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('fullName').value;
-    const email = document.getElementById('email').value;
-    const address = document.getElementById('address').value;
-    if (!name || !email || !address) { showToast("Please fill all required fields"); return; }
-    if (cart.items.length === 0) { showToast("Your cart is empty"); return; }
-    const orderRef = "HOLY-" + Math.random().toString(36).substring(2,8).toUpperCase();
-    document.getElementById('orderRefDemo').innerHTML = `Reference: ${orderRef}`;
-    showToast(`✅ Order placed! Total R${cart.totalPrice}. ${document.getElementById('selectedPayment').value === 'eft' ? 'Use FNB details above to complete EFT.' : 'Payment simulated (sandbox).'}`);
-    cart = { items: [], totalQty: 0, totalPrice: 0 }; saveCart();
-    document.getElementById('checkoutForm').reset();
-  });
-
-  // Clear cart button
-  document.getElementById('clearCartBtn').addEventListener('click', clearCart);
-  document.getElementById('scrollToCheckoutBtn').addEventListener('click', () => {
-    document.getElementById('checkout').scrollIntoView({ behavior: 'smooth' });
-  });
-
-  // ---------- HAMBURGER MENU FIX (works now) ----------
-  document.addEventListener('DOMContentLoaded', function() {
-    const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.getElementById('navLinks');
-    if (menuToggle && navLinks) {
-      // Set initial state for mobile
-      if (window.innerWidth <= 768) {
-        navLinks.style.display = 'none';
-      }
-      menuToggle.addEventListener('click', function(e) {
-        e.stopPropagation();
-        if (navLinks.style.display === 'none' || navLinks.style.display === '') {
-          navLinks.style.display = 'flex';
-        } else {
-          navLinks.style.display = 'none';
-        }
-      });
-      // Close menu when a link is clicked
-      navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', function() {
-          if (window.innerWidth <= 768) {
-            navLinks.style.display = 'none';
-          }
-        });
-      });
-      // On window resize, reset if needed
-      window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-          navLinks.style.display = ''; // revert to CSS default
-        } else {
-          navLinks.style.display = 'none';
-        }
-      });
-    }
-  });
-
-  // Initialise everything
-  renderProducts();
-  populateBooks('bibleBooksContainer', modernBooks);
-  populateBooks('ethiopianBooksContainer', ethiopianBooks);
-  updateCartUI();
-</script>
-</body>
-</html>
+        id: Date.now() + Math.random
