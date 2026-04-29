@@ -1,0 +1,15 @@
+<!-- views/partials/header.ejs -->
+<nav class="navbar">
+    <div class="logo">
+        <a href="/">✝️ Christian Poster Shop</a>
+    </div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/products">All Posters</a>
+        <a href="/marketing/dashboard">Marketing</a>
+        <a href="/cart" class="cart-icon">
+            🛒 Cart
+            <span class="cart-count"><%= cart.totalItems || 0 %></span>
+        </a>
+    </div>
+</nav>
