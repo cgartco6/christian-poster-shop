@@ -108,12 +108,7 @@
         box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         z-index: 101;
       }
-      .nav-links.show {
-        display: flex;
-      }
-      .nav-bar {
-        flex-wrap: wrap;
-      }
+      /* No .show class needed – we use inline style */
     }
     /* Hero section */
     .hero {
@@ -565,4 +560,135 @@
 
   // Generate poster for any book (with random image)
   function generateBookPoster(book, previewDivId) {
-    cons
+    const previewDiv = document.getElementById(previewDivId);
+    previewDiv.style.display = 'block';
+    const randomImgId = Math.floor(Math.random() * 200) + 1;
+    previewDiv.innerHTML = `
+      <i class="fas fa-scroll"></i> <strong>${book}</strong> – Visual Summary Poster<br>
+      <img src="https://picsum.photos/id/${randomImgId}/400/500" style="width:100%; border-radius:16px; margin:10px 0;">
+      <p>📖 Key themes, major events, and memory verse illustrated.<br>Perfect for display or study.</p>
+      <button class="btn-outline add-cart-generated">Add to Cart (R50)</button>
+    `;
+    previewDiv.querySelector('.add-cart-generated')?.addEventListener('click', () => {
+      const generatedPoster = {
+        id: Date.now() + Math.random(),
+        name: `${book} Visual Summary`,
+        verse: "AI‑generated Bible guide",
+        price: 50,
+        image: `https://picsum.photos/id/${randomImgId}/400/500`
+      };
+      addToCart(generatedPoster);
+    });
+  }
+
+  // ---------- Event Listeners ----------
+  document.getElementById('generateCanonPosterBtn').addEventListener('click', () => {
+    const selected = document.querySelector('#bibleBooksContainer .book-btn.selected');
+    if (!selected) { showToast("Please select a book from the Modern Bible list"); return; }
+    generateBookPoster(selected.dataset.book, 'canonPosterPreview');
+  });
+  document.getElementById('generateEthiopianPosterBtn').addEventListener('click', () => {
+    const selected = document.querySelector('#ethiopianBooksContainer .book-btn.selected');
+    if (!selected) { showToast("Please select a book from the Ethiopian Bible list"); return; }
+    generateBookPoster(selected.dataset.book, 'ethiopianPreview');
+  });
+
+  // Infinite HD Poster Agent
+  document.getElementById('generatePosterBtn').addEventListener('click', () => {
+    const preview = document.getElementById('aiPosterPreview');
+    preview.style.display = 'block';
+    const randomId = Math.floor(Math.random() * 10000);
+    const styles = ['Watercolor', 'Oil painting', 'Digital calligraphy', 'Stained glass', 'Vintage print'];
+    preview.innerHTML = `
+      <i class="fas fa-spinner fa-spin"></i> Generating unique A1 poster...<br>
+      <img src="https://picsum.photos/id/${Math.floor(Math.random()*200)+1}/400/500" style="width:100%; border-radius:16px; margin-top:10px;">
+      <p><strong>✨ Never‑repeating HD design ✨</strong><br>Style: ${styles[Math.floor(Math.random()*styles.length)]}<br>
+      <button class="btn-outline" id="addUniqueCart">Add to Cart (R50)</button></p>
+    `;
+    document.getElementById('addUniqueCart')?.addEventListener('click', () => {
+      const uniquePoster = {
+        id: 90000 + randomId,
+        name: `AI Unique Poster ${randomId}`,
+        verse: "Generative art",
+        price: 50,
+        image: `https://picsum.photos/id/${Math.floor(Math.random()*200)+1}/400/500`
+      };
+      addToCart(uniquePoster);
+    });
+  });
+
+  // Payment method selection
+  document.querySelectorAll('.payment-option').forEach(opt => {
+    opt.addEventListener('click', function() {
+      document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+      this.classList.add('selected');
+      document.getElementById('selectedPayment').value = this.dataset.method;
+      document.getElementById('fnbDetails').style.display = this.dataset.method === 'eft' ? 'block' : 'none';
+    });
+  });
+
+  // Checkout form submission
+  document.getElementById('checkoutForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('fullName').value;
+    const email = document.getElementById('email').value;
+    const address = document.getElementById('address').value;
+    if (!name || !email || !address) { showToast("Please fill all required fields"); return; }
+    if (cart.items.length === 0) { showToast("Your cart is empty"); return; }
+    const orderRef = "HOLY-" + Math.random().toString(36).substring(2,8).toUpperCase();
+    document.getElementById('orderRefDemo').innerHTML = `Reference: ${orderRef}`;
+    showToast(`✅ Order placed! Total R${cart.totalPrice}. ${document.getElementById('selectedPayment').value === 'eft' ? 'Use FNB details above to complete EFT.' : 'Payment simulated (sandbox).'}`);
+    cart = { items: [], totalQty: 0, totalPrice: 0 }; saveCart();
+    document.getElementById('checkoutForm').reset();
+  });
+
+  // Clear cart button
+  document.getElementById('clearCartBtn').addEventListener('click', clearCart);
+  document.getElementById('scrollToCheckoutBtn').addEventListener('click', () => {
+    document.getElementById('checkout').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // ---------- HAMBURGER MENU FIX (works now) ----------
+  document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (menuToggle && navLinks) {
+      // Set initial state for mobile
+      if (window.innerWidth <= 768) {
+        navLinks.style.display = 'none';
+      }
+      menuToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (navLinks.style.display === 'none' || navLinks.style.display === '') {
+          navLinks.style.display = 'flex';
+        } else {
+          navLinks.style.display = 'none';
+        }
+      });
+      // Close menu when a link is clicked
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function() {
+          if (window.innerWidth <= 768) {
+            navLinks.style.display = 'none';
+          }
+        });
+      });
+      // On window resize, reset if needed
+      window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+          navLinks.style.display = ''; // revert to CSS default
+        } else {
+          navLinks.style.display = 'none';
+        }
+      });
+    }
+  });
+
+  // Initialise everything
+  renderProducts();
+  populateBooks('bibleBooksContainer', modernBooks);
+  populateBooks('ethiopianBooksContainer', ethiopianBooks);
+  updateCartUI();
+</script>
+</body>
+</html>
