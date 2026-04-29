@@ -1,0 +1,28 @@
+<!-- views/index.ejs -->
+<div class="hero">
+    <h1>Inspirational Christian & Biblical Posters</h1>
+    <p>Beautiful artwork featuring powerful Bible verses to strengthen your faith</p>
+    <a href="/products" class="btn btn-primary">Shop Now →</a>
+</div>
+
+<div class="container">
+    <h2>Featured Posters</h2>
+    <div class="products-grid">
+        <% featuredProducts.forEach(product => { %>
+            <div class="product-card">
+                <img src="<%= product.image %>" alt="<%= product.name %>">
+                <div class="product-info">
+                    <h3 class="product-title"><%= product.name %></h3>
+                    <p class="product-description"><%= product.description %></p>
+                    <p class="product-verse">📖 <%= product.verse %></p>
+                    <p class="product-price">R<%= product.price %> <span>each</span></p>
+                    <button class="add-to-cart" data-id="<%= product.id %>">Add to Cart</button>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+    
+    <div style="text-align: center; margin-top: 2rem;">
+        <a href="/products" class="btn btn-secondary">View All 25 Posters →</a>
+    </div>
+</div>
