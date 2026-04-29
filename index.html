@@ -91,7 +91,7 @@
       font-size: 0.7rem;
       font-weight: bold;
     }
-    /* Responsive navigation */
+    /* Responsive navigation - FIXED */
     @media (max-width: 768px) {
       .menu-toggle {
         display: block;
@@ -106,6 +106,7 @@
         margin-top: 1rem;
         border-radius: 20px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        z-index: 101;
       }
       .nav-links.show {
         display: flex;
@@ -564,4 +565,4 @@
 
   // Generate poster for any book (with random image)
   function generateBookPoster(book, previewDivId) {
-    const previewDiv = document.getEle
+    cons
