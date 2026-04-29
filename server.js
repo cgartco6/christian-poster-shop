@@ -2,34 +2,23 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-const mongoose = require('mongoose');
 const passport = require('passport');
-const cron = require('node-cron');
-const path = require('path');
+const connectDB = require('./config/db');
 const { startScheduler } = require('./services/scheduler');
+const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
+connectDB();
 
-// MongoDB connection
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error(err));
-
-// Session store in MongoDB
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
-  cookie: { secure: process.env.NODE_ENV === 'production', maxAge: 1000*60*60*24 }
+  cookie: { secure: process.env.NODE_ENV === 'production', maxAge: 1000 * 60 * 60 * 24 }
 }));
-
-// Passport init
-require('./config/passport');
 app.use(passport.initialize());
 app.use(passport.session());
-
-// Other middleware...
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
@@ -43,7 +32,11 @@ app.use('/payment', require('./routes/payment'));
 app.use('/marketing', require('./routes/marketing'));
 app.use('/webhooks', require('./routes/webhooks'));
 
-// Start cron jobs for scheduled social posts
-startScheduler();
+// Health check
+app.get('/health', (req, res) => res.send('OK'));
 
-app.listen(process.env.PORT, () => console.log(`Server on port ${process.env.PORT}`));
+startScheduler();
+app.use(errorHandler);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
