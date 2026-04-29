@@ -1,0 +1,63 @@
+<!-- views/marketing/campaigns.ejs -->
+<div class="container">
+  <h1>📢 Marketing Campaigns</h1>
+
+  <div class="marketing-nav">
+    <a href="/marketing/dashboard">Dashboard</a>
+    <a href="/marketing/campaigns" class="active">Campaigns</a>
+    <a href="/marketing/social-poster">Social Poster</a>
+    <a href="/marketing/landing-builder">Landing Builder</a>
+    <a href="/marketing/analytics">Analytics</a>
+  </div>
+
+  <div style="background: white; border-radius: 28px; padding: 1.5rem; margin-bottom: 2rem;">
+    <h3>Create new campaign</h3>
+    <form action="/marketing/campaigns/create" method="POST">
+      <div class="form-group">
+        <label>Campaign name</label>
+        <input type="text" name="name" required>
+      </div>
+      <div class="form-group">
+        <label>Type</label>
+        <select name="type">
+          <option value="ad">Ad</option>
+          <option value="social_post">Social Post</option>
+          <option value="email">Email</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Content / Message</label>
+        <textarea name="content" rows="3" required></textarea>
+      </div>
+      <div class="form-group">
+        <label>Media URL (optional)</label>
+        <input type="url" name="mediaUrl">
+      </div>
+      <div class="form-group">
+        <label>Target platforms (comma: facebook,instagram,tiktok)</label>
+        <input type="text" name="targetPlatforms" placeholder="facebook,instagram">
+      </div>
+      <div class="form-group">
+        <label>Scheduled date (optional)</label>
+        <input type="datetime-local" name="scheduledDate">
+      </div>
+      <button type="submit" class="btn btn-primary">Create Campaign</button>
+    </form>
+  </div>
+
+  <h3>Existing campaigns</h3>
+  <% if (campaigns && campaigns.length) { %>
+    <div style="display: flex; flex-direction: column; gap: 1rem;">
+      <% campaigns.forEach(c => { %>
+        <div style="background: #fef9ef; border-radius: 20px; padding: 1rem;">
+          <div><strong><%= c.name %></strong> (<%= c.type %>) – Status: <%= c.status %></div>
+          <div><%= c.content %></div>
+          <div style="font-size: 0.8rem; color: #6c5a4a;">Platforms: <%= c.targetPlatforms ? c.targetPlatforms.join(', ') : 'none' %></div>
+          <div style="font-size: 0.8rem;">Created: <%= new Date(c.createdAt).toLocaleString() %></div>
+        </div>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <p>No campaigns yet. Create your first campaign above.</p>
+  <% } %>
+</div>
