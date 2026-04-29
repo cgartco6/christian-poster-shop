@@ -1,0 +1,48 @@
+<!-- views/cart.ejs -->
+<div class="container">
+    <h1>Shopping Cart</h1>
+    
+    <% if (cart.totalItems === 0) { %>
+        <div class="alert alert-info">
+            <p>Your cart is empty. <a href="/products">Continue shopping →</a></p>
+        </div>
+    <% } else { %>
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% cart.items.forEach(item => { %>
+                    <tr>
+                        <td data-label="Product">
+                            <img src="<%= item.image %>" class="cart-item-image" alt="<%= item.name %>">
+                            <%= item.name %>
+                        </td>
+                        <td data-label="Price">R<%= item.price %></td>
+                        <td data-label="Quantity">
+                            <input type="number" class="quantity-input" data-id="<%= item.id %>" value="<%= item.quantity %>" min="1" style="width: 60px;">
+                        </td>
+                        <td data-label="Subtotal">R<%= item.price * item.quantity %></td>
+                        <td data-label="Remove">
+                            <button class="remove-btn" data-id="<%= item.id %>">Remove</button>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        
+        <div class="cart-summary">
+            <h3>Cart Summary</h3>
+            <p>Total Items: <strong><%= cart.totalItems %></strong></p>
+            <p>Total Amount: <strong style="font-size: 1.5rem; color: #e67e22;">R<%= cart.totalPrice %></strong></p>
+            <a href="/checkout" class="btn btn-primary" style="margin-top: 1rem;">Proceed to Checkout</a>
+            <a href="/products" class="btn btn-secondary">Continue Shopping</a>
+        </div>
+    <% } %>
+</div>
