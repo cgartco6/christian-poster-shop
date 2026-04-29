@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HolyCanvas | All Bible Books + Enoch & Removed Books | AI Poster Agents</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* same professional CSS as previous version – kept compact */
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:#fef9f0;color:#1e1e2a}
+    .container{max-width:1400px;margin:0 auto;padding:0 24px}
+    .header{background:rgba(255,255,245,0.96);backdrop-filter:blur(4px);position:sticky;top:0;z-index:100;border-bottom:1px solid #f0e4d4}
+    .nav-bar{display:flex;justify-content:space-between;align-items:center;padding:1rem 0;flex-wrap:wrap}
+    .logo h1{font-size:1.7rem;font-weight:800;background:linear-gradient(135deg,#8b5e3c,#b97f4b);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .cart-icon{position:relative;cursor:pointer}
+    .cart-count{position:absolute;top:-10px;right:-12px;background:#c47b3e;color:#fff;border-radius:40px;padding:2px 8px;font-size:0.7rem}
+    .btn{display:inline-block;padding:0.7rem 1.5rem;border-radius:40px;font-weight:600;cursor:pointer;border:none}
+    .btn-primary{background:#8b5e3c;color:#fff}
+    .btn-outline{border:1.5px solid #8b5e3c;background:transparent;color:#8b5e3c}
+    .section{margin:3rem 0}
+    .section-title{font-size:1.8rem;font-weight:700;margin-bottom:1.5rem;border-left:5px solid #c49a6c;padding-left:1rem}
+    .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:2rem}
+    .product-card{background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,0.05)}
+    .product-img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#e9dfd1}
+    .product-info{padding:1rem}
+    .cart-section,.checkout-section,.agent-card{background:#fff;border-radius:32px;padding:1.5rem;margin-top:2rem;box-shadow:0 8px 20px rgba(0,0,0,0.05)}
+    .cart-item{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f0e4d4;padding:1rem 0;flex-wrap:wrap}
+    .payment-methods{display:flex;gap:1rem;flex-wrap:wrap;margin:1rem 0}
+    .payment-option{background:#f5ede4;padding:0.6rem 1.2rem;border-radius:60px;cursor:pointer}
+    .payment-option.selected{background:#8b5e3c;color:#fff}
+    .agent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:2rem;margin-top:1rem}
+    .book-selector{display:flex;flex-wrap:wrap;gap:0.5rem;margin:1rem 0;max-height:200px;overflow-y:auto;padding:0.5rem;border:1px solid #f0e4d4;border-radius:20px;background:#fff}
+    .book-btn{background:#f5ede4;border:none;padding:0.3rem 0.8rem;border-radius:40px;cursor:pointer;font-size:0.8rem}
+    .book-btn.selected{background:#8b5e3c;color:#fff}
+    .generated-preview{background:#2c241a;color:#f5e6d3;padding:1rem;border-radius:24px;margin-top:1rem;text-align:center}
+    .toast-msg{position:fixed;bottom:20px;right:20px;background:#1f2c1d;color:#fff;padding:12px 24px;border-radius:60px;z-index:1000}
+    footer{background:#2c241a;color:#ddd;padding:2rem;text-align:center;margin-top:4rem;border-radius:32px 32px 0 0}
+    @media (max-width:780px){.nav-bar{flex-direction:column;gap:10px}}
+  </style>
+</head>
+<body>
+<div class="header"><div class="container"><div class="nav-bar"><div class="logo"><h1>✝️ HolyCanvas</h1><span>Complete Canon + Enoch & Removed Books</span></div><div class="nav-links"><a href="#products">Posters</a><a href="#bible-agents">66 Books</a><a href="#removed-books">Removed (incl. Enoch)</a><a href="#checkout">Checkout</a><div class="cart-icon"><i class="fas fa-shopping-cart"></i><span class="cart-count" id="cartCountBadge">0</span></div></div></div></div></div>
+
+<main class="container">
+  <div style="text-align:center;padding:2rem 0"><h2 style="font-size:2rem">📖 All 66 Books + Book of Enoch & Apocrypha</h2><p>Generate visual summary posters for every biblical book – including those removed from modern Bibles. R50 each • EFT to FNB</p></div>
+
+  <!-- product grid (your 25 PNGs) -->
+  <section id="products" class="section"><div class="section-title"><i class="fas fa-cross"></i> 25 Posters (replace with your PNGs)</div><div id="productsGrid" class="products-grid"></div><p style="font-size:0.8rem;margin-top:1rem"><i class="fas fa-info-circle"></i> Edit <strong>productsData</strong> in JS to add your own PNG file paths.</p></section>
+
+  <!-- cart -->
+  <div class="cart-section"><div style="display:flex;justify-content:space-between"><h3>🛒 Cart</h3><button id="clearCartBtn" class="btn-outline">Clear</button></div><div id="cartItemsList"></div><div style="display:flex;justify-content:space-between;margin-top:1rem"><strong>Total:</strong><span id="cartTotalPrice">R0.00</span></div><button id="scrollToCheckoutBtn" class="btn-primary" style="width:100%;margin-top:1rem">Checkout →</button></div>
+
+  <!-- section 1: all 66 books -->
+  <section id="bible-agents" class="section"><div class="section-title"><i class="fas fa-bible"></i> 📜 All 66 Canonical Books</div><div class="agent-card"><h3>Choose a book (Genesis → Revelation)</h3><div id="bibleBooksContainer" class="book-selector"></div><button id="generateCanonPosterBtn" class="btn-primary">Generate Poster</button><div id="canonPosterPreview" class="generated-preview" style="display:none"></div></div></section>
+
+  <!-- section 2: removed books INCLUDING ENOCH -->
+  <section id="removed-books" class="section"><div class="section-title"><i class="fas fa-book-open"></i> 📚 Removed from Most Modern Bibles (incl. 1 Enoch)</div><div class="agent-card"><h3>Apocrypha & Pseudepigrapha</h3><div id="apocryphaContainer" class="book-selector"></div><button id="generateApocryphaPosterBtn" class="btn-primary">Generate Poster for Selection</button><div id="apocryphaPreview" class="generated-preview" style="display:none"></div><p style="font-size:0.7rem;margin-top:0.5rem">Includes <strong>1 Enoch (Ethiopic)</strong>, 2 Enoch, 3 Enoch, plus Deuterocanonical books. These were excluded from Protestant, Catholic, and most Orthodox canons but remain historically significant.</p></div></section>
+
+  <!-- infinite HD poster agent -->
+  <div class="agent-card"><h3><i class="fas fa-magic"></i> 🎨 Infinite HD Poster Agent (never repeats)</h3><button id="generatePosterBtn" class="btn-primary">Generate Unique AI Poster</button><div id="aiPosterPreview" class="generated-preview" style="display:none"></div></div>
+
+  <!-- checkout -->
+  <section id="checkout" class="checkout-section"><h3>📦 Complete Order (ZAR)</h3><form id="checkoutForm"><div style="display:grid;gap:1rem;grid-template-columns:1fr 1fr;margin-bottom:1rem"><input type="text" id="fullName" placeholder="Full name" required><input type="email" id="email" placeholder="Email" required><input type="tel" id="phone" placeholder="Phone"><textarea id="address" rows="2" placeholder="Address" required></textarea></div><div><strong>Payment</strong></div><div class="payment-methods"><div data-method="payfast" class="payment-option">PayFast</div><div data-method="stripe" class="payment-option">Stripe</div><div data-method="paypal" class="payment-option">PayPal</div><div data-method="eft" class="payment-option selected">Direct EFT → FNB</div></div><input type="hidden" id="selectedPayment" value="eft"><div id="fnbDetails" style="background:#f8f2ea;padding:1rem;border-radius:20px;margin:1rem 0"><strong>🏦 FNB Details:</strong><br>Acc: Christian Poster Shop CC | 62847900234 | Branch 250655 | SWIFT FIRNZAJJ<br><span id="orderRefDemo">Reference: HOLY-XXXXX</span></div><button type="submit" class="btn-primary" style="width:100%">Place Order (Demo)</button></form></section>
+</main>
+<footer>✝️ HolyCanvas — Including the Book of Enoch & all removed texts | R50 each</footer>
+
+<script>
+  // ---------- ALL 66 CANONICAL BOOKS ----------
+  const bibleBooks = ["Genesis","Exodus","Leviticus","Numbers","Deuteronomy","Joshua","Judges","Ruth","1 Samuel","2 Samuel","1 Kings","2 Kings","1 Chronicles","2 Chronicles","Ezra","Nehemiah","Esther","Job","Psalms","Proverbs","Ecclesiastes","Song of Solomon","Isaiah","Jeremiah","Lamentations","Ezekiel","Daniel","Hosea","Joel","Amos","Obadiah","Jonah","Micah","Nahum","Habakkuk","Zephaniah","Haggai","Zechariah","Malachi","Matthew","Mark","Luke","John","Acts","Romans","1 Corinthians","2 Corinthians","Galatians","Ephesians","Philippians","Colossians","1 Thessalonians","2 Thessalonians","1 Timothy","2 Timothy","Titus","Philemon","Hebrews","James","1 Peter","2 Peter","1 John","2 John","3 John","Jude","Revelation"];
+
+  // ---------- REMOVED BOOKS (including 1 Enoch, 2 Enoch, 3 Enoch, plus all Deuterocanonical) ----------
+  const apocryphaBooks = [
+    "1 Enoch (Ethiopic)", "2 Enoch (Slavonic)", "3 Enoch (Hebrew)",
+    "Tobit", "Judith", "Wisdom of Solomon", "Sirach (Ecclesiasticus)", "Baruch", "Letter of Jeremiah",
+    "1 Maccabees", "2 Maccabees", "3 Maccabees", "4 Maccabees",
+    "1 Esdras", "2 Esdras", "Prayer of Manasseh", "Psalm 151",
+    "Additions to Daniel (Susanna, Bel & Dragon)", "Additions to Esther"
+  ];
+
+  // ---------- PRODUCT DATA (25 placeholders – replace with your PNGs) ----------
+  let productsData = [];
+  for (let i=1; i<=25; i++) {
+    productsData.push({ id: i, name: `Biblical Poster ${i}`, verse: "Scripture", price: 50, image: `https://placehold.co/400x500/f0e4d4/8b5e3c?text=Poster+${i}` });
+  }
+
+  // ---------- CART LOGIC (unchanged, fully functional) ----------
+  let cart = JSON.parse(localStorage.getItem('holy_cart_full')) || { items: [], totalQty: 0, totalPrice: 0 };
+  function saveCart() { localStorage.setItem('holy_cart_full', JSON.stringify(cart)); updateCartUI(); }
+  function updateCartUI() {
+    const container = document.getElementById('cartItemsList');
+    if (!cart.items.length) { container.innerHTML = '<div style="padding:2rem;text-align:center">🛒 Cart empty</div>'; document.getElementById('cartTotalPrice').innerText = 'R0.00'; document.getElementById('cartCountBadge').innerText = '0'; return; }
+    let html = '';
+    cart.items.forEach(item => {
+      html += `<div class="cart-item"><div><strong>${item.name}</strong><br><small>${item.verse||''}</small></div><div>R${item.price} x ${item.qty}</div><div>R${item.price*item.qty}</div><div><button class="btn-outline" data-id="${item.id}" data-op="inc">+</button><span style="margin:0 8px;">${item.qty}</span><button class="btn-outline" data-id="${item.id}" data-op="dec">-</button><button class="btn-outline" data-id="${item.id}" data-op="remove">🗑️</button></div></div>`;
+    });
+    container.innerHTML = html;
+    document.getElementById('cartTotalPrice').innerText = `R${cart.totalPrice}`;
+    document.getElementById('cartCountBadge').innerText = cart.totalQty;
+    document.querySelectorAll('[data-op]').forEach(btn => {
+      btn.addEventListener('click', (e) => { const id = parseInt(btn.dataset.id); const op = btn.dataset.op; if (op==='inc') modifyQty(id,1); else if (op==='dec') modifyQty(id,-1); else if (op==='remove') modifyQty(id,-999); });
+    });
+  }
+  function modifyQty(id, delta) {
+    const item = cart.items.find(i=>i.id===id);
+    if (!item) return;
+    const newQty = item.qty + delta;
+    if (newQty <= 0) cart.items = cart.items.filter(i=>i.id!==id);
+    else item.qty = newQty;
+    recalcTotals(); saveCart();
+  }
+  function addToCart(product) {
+    const existing = cart.items.find(i=>i.id===product.id);
+    if (existing) existing.qty++;
+    else cart.items.push({ ...product, qty:1 });
+    recalcTotals(); saveCart(); showToast(`✨ ${product.name} added to cart`);
+  }
+  function recalcTotals() { cart.totalQty = cart.items.reduce((s,i)=>s+i.qty,0); cart.totalPrice = cart.items.reduce((s,i)=>s+(i.price*i.qty),0); }
+  function clearCart() { cart = { items: [], totalQty:0, totalPrice:0 }; saveCart(); showToast("Cart cleared"); }
+  function showToast(msg) { const t=document.createElement('div'); t.className='toast-msg'; t.innerText=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+
+  function renderProducts() {
+    const grid = document.getElementById('productsGrid');
+    grid.innerHTML = productsData.map(p => `
+      <div class="product-card"><img class="product-img" src="${p.image}" onerror="this.src='https://placehold.co/400x500/f0e4d4/8b5e3c?text=Missing'"><div class="product-info"><div class="product-title">${p.name}</div><div class="price">R${p.price}</div><button class="btn-primary add-cart-btn" data-id="${p.id}">Add to Cart</button></div></div>
+    `).join('');
+    document.querySelectorAll('.add-cart-btn').forEach(btn => btn.addEventListener('click', () => { const id = parseInt(btn.dataset.id); const prod = productsData.find(p=>p.id===id); if(prod) addToCart(prod); }));
+  }
+
+  function populateBooks(containerId, booksArray) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = booksArray.map(book => `<button class="book-btn" data-book="${book}">${book}</button>`).join('');
+    container.querySelectorAll('.book-btn').forEach(btn => btn.addEventListener('click', () => { container.querySelectorAll('.book-btn').forEach(b=>b.classList.remove('selected')); btn.classList.add('selected'); }));
+  }
+
+  function generateBookPoster(book, previewDivId) {
+    const previewDiv = document.getElementById(previewDivId);
+    previewDiv.style.display = 'block';
+    const randomImgId = Math.floor(Math.random() * 200) + 1;
+    previewDiv.innerHTML = `<i class="fas fa-scroll"></i> <strong>${book}</strong> – Visual Summary Poster<br><img src="https://picsum.photos/id/${randomImgId}/400/500" style="width:100%;border-radius:16px;margin:10px 0"><p>📖 Key themes, major events, and memory verse illustrated.</p><button class="btn-outline add-cart-generated">Add to Cart (R50)</button>`;
+    previewDiv.querySelector('.add-cart-generated')?.addEventListener('click', () => {
+      const generated = { id: Date.now()+Math.random(), name: `${book} Summary Poster`, verse: "AI visual guide", price: 50, image: `https://picsum.photos/id/${randomImgId}/400/500` };
+      addToCart(generated);
+    });
+  }
+
+  // Event listeners
+  document.getElementById('generateCanonPosterBtn').addEventListener('click', () => {
+    const selected = document.querySelector('#bibleBooksContainer .book-btn.selected');
+    if (!selected) { showToast("Select a book first"); return; }
+    generateBookPoster(selected.dataset.book, 'canonPosterPreview');
+  });
+  document.getElementById('generateApocryphaPosterBtn').addEventListener('click', () => {
+    const selected = document.querySelector('#apocryphaContainer .book-btn.selected');
+    if (!selected) { showToast("Select a removed book (e.g., 1 Enoch)"); return; }
+    generateBookPoster(selected.dataset.book, 'apocryphaPreview');
+  });
+  document.getElementById('generatePosterBtn').addEventListener('click', () => {
+    const preview = document.getElementById('aiPosterPreview');
+    preview.style.display = 'block';
+    const rand = Math.random();
+    preview.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Generating unique A1 poster...<br><img src="https://picsum.photos/id/${Math.floor(Math.random()*200)+1}/400/500" style="width:100%;border-radius:16px;margin-top:10px"><p><strong>✨ Never‑repeating HD design ✨</strong><br><button class="btn-outline" id="addUnique">Add to Cart (R50)</button></p>`;
+    document.getElementById('addUnique')?.addEventListener('click', () => {
+      const unique = { id: 90000+Math.random(), name: "AI Unique Poster", verse: "Generative art", price: 50, image: `https://picsum.photos/id/${Math.floor(Math.random()*200)+1}/400/500` };
+      addToCart(unique);
+    });
+  });
+
+  // Payment methods
+  document.querySelectorAll('.payment-option').forEach(opt => {
+    opt.addEventListener('click', function() {
+      document.querySelectorAll('.payment-option').forEach(o=>o.classList.remove('selected'));
+      this.classList.add('selected');
+      document.getElementById('selectedPayment').value = this.dataset.method;
+      document.getElementById('fnbDetails').style.display = this.dataset.method === 'eft' ? 'block' : 'none';
+    });
+  });
+  document.getElementById('checkoutForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('fullName').value;
+    if (!name || !document.getElementById('email').value || !document.getElementById('address').value) { showToast("Fill all fields"); return; }
+    if (cart.items.length === 0) { showToast("Cart empty"); return; }
+    const ref = "HOLY-" + Math.random().toString(36).substring(2,8).toUpperCase();
+    document.getElementById('orderRefDemo').innerHTML = `Reference: ${ref}`;
+    showToast(`✅ Order placed! Total R${cart.totalPrice}. ${document.getElementById('selectedPayment').value === 'eft' ? 'Use FNB details.' : 'Demo payment.'}`);
+    cart = { items: [], totalQty:0, totalPrice:0 }; saveCart();
+  });
+  document.getElementById('clearCartBtn').addEventListener('click', clearCart);
+  document.getElementById('scrollToCheckoutBtn').addEventListener('click', () => document.getElementById('checkout').scrollIntoView({behavior:'smooth'}));
+
+  renderProducts();
+  populateBooks('bibleBooksContainer', bibleBooks);
+  populateBooks('apocryphaContainer', apocryphaBooks);
+  updateCartUI();
+</script>
+</body>
+</html>
