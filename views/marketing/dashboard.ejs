@@ -1,0 +1,50 @@
+<!-- views/marketing/dashboard.ejs -->
+<div class="container">
+    <h1>Marketing Dashboard</h1>
+    
+    <div class="marketing-nav">
+        <a href="/marketing/dashboard" class="active">Dashboard</a>
+        <a href="/marketing/campaigns">Campaigns</a>
+        <a href="/marketing/social-poster">Social Poster</a>
+        <a href="/marketing/landing-builder">Landing Builder</a>
+        <a href="/marketing/analytics">Analytics</a>
+    </div>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>Total Campaigns</h3>
+            <p style="font-size: 2rem;"><%= campaigns ? campaigns.length : 0 %></p>
+        </div>
+        <div class="stat-card">
+            <h3>Active Ads</h3>
+            <p style="font-size: 2rem;"><%= campaigns ? campaigns.filter(c => c.status === 'published').length : 0 %></p>
+        </div>
+        <div class="stat-card">
+            <h3>Scheduled Posts</h3>
+            <p style="font-size: 2rem;"><%= campaigns ? campaigns.filter(c => c.status === 'scheduled').length : 0 %></p>
+        </div>
+    </div>
+    
+    <h2>Platform Status & Recommendations</h2>
+    <div class="platform-status">
+        <% if (platformStatus && platformStatus.platformStatus) { %>
+            <% Object.entries(platformStatus.platformStatus).forEach(([platform, status]) => { %>
+                <div class="platform-badge <%= status.online ? 'online' : '' %>">
+                    <strong><%= platform %></strong><br>
+                    Status: <%= status.online ? '✅ Online' : '❌ Offline' %><br>
+                    Rate Limit: <%= status.rateLimit %>%<br>
+                    Suggested: <%= platformStatus.recommendations[platform]?.suggestedContent %>
+                </div>
+            <% }) %>
+        <% } %>
+    </div>
+    
+    <h2>AI Posting Recommendations</h2>
+    <div style="background: white; padding: 1rem; border-radius: 10px;">
+        <% if (recommendations) { %>
+            <% Object.entries(recommendations).forEach(([platform, rec]) => { %>
+                <p><strong><%= platform %>:</strong> <%= rec %></p>
+            <% }) %>
+        <% } %>
+    </div>
+</div>
