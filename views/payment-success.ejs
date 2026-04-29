@@ -1,0 +1,10 @@
+<!-- views/payment-success.ejs -->
+<div class="container" style="text-align: center; padding: 3rem;">
+    <div style="background: #d4edda; color: #155724; padding: 2rem; border-radius: 10px;">
+        <h1>✓ Payment Successful!</h1>
+        <p>Thank you for your order</p>
+        <h3>Order Number: <%= order ? order.orderId : 'N/A' %></h3>
+        <p>You will receive a confirmation email shortly.</p>
+        <a href="/" class="btn btn-primary" style="margin-top: 1rem;">Continue Shopping</a>
+    </div>
+</div>
