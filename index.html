@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>HolyCanvas | Upload Your Posters + AI Biblical Art</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #fef9f0; color: #1e1e2a; line-height: 1.5; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+    .header { background: rgba(255,255,245,0.96); backdrop-filter: blur(4px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #f0e4d4; }
+    .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; flex-wrap: wrap; }
+    .logo h1 { font-size: 1.7rem; font-weight: 800; background: linear-gradient(135deg, #8b5e3c, #b97f4b); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .logo span { font-size: 0.8rem; color: #7c6b5a; display: block; }
+    .menu-toggle { display: none; background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #8b5e3c; padding: 0.5rem; }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a { text-decoration: none; font-weight: 600; color: #2d2f36; transition: color 0.2s; }
+    .nav-links a:hover { color: #8b5e3c; }
+    .cart-icon { position: relative; cursor: pointer; font-size: 1.4rem; }
+    .cart-count { position: absolute; top: -10px; right: -12px; background: #c47b3e; color: white; border-radius: 40px; padding: 2px 8px; font-size: 0.7rem; font-weight: bold; }
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      .nav-links { display: none; flex-direction: column; width: 100%; background: white; padding: 1rem 0; gap: 1rem; margin-top: 1rem; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); z-index: 101; }
+      .nav-links.show { display: flex; }
+      .nav-bar { flex-wrap: wrap; }
+    }
+    .hero { background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=2070&auto=format'); background-size: cover; background-position: center 30%; border-radius: 32px; margin: 2rem 0; padding: 5rem 2rem; text-align: center; color: white; }
+    .hero h2 { font-size: 2.5rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+    .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+    .btn { display: inline-block; padding: 0.7rem 1.5rem; border-radius: 40px; font-weight: 600; cursor: pointer; border: none; transition: 0.2s; }
+    .btn-primary { background: #8b5e3c; color: white; }
+    .btn-primary:hover { background: #6b462a; transform: translateY(-2px); }
+    .btn-outline { border: 1.5px solid #8b5e3c; background: transparent; color: #8b5e3c; }
+    .section { margin: 3rem 0; scroll-margin-top: 80px; }
+    .section-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 1.5rem; border-left: 5px solid #c49a6c; padding-left: 1rem; }
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2rem; }
+    .product-card { background: white; border-radius: 28px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.05); transition: 0.2s; }
+    .product-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+    .product-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; background: #e9dfd1; }
+    .product-info { padding: 1rem; }
+    .product-title { font-weight: 800; }
+    .price { font-weight: 800; font-size: 1.3rem; color: #8b5e3c; margin: 0.4rem 0; }
+    .cart-section, .checkout-section, .agent-card, .admin-panel { background: white; border-radius: 32px; padding: 1.5rem; margin-top: 2rem; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0e4d4; padding: 1rem 0; flex-wrap: wrap; gap: 10px; }
+    .payment-methods { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1rem 0; }
+    .payment-option { background: #f5ede4; padding: 0.6rem 1.2rem; border-radius: 60px; cursor: pointer; font-weight: 500; }
+    .payment-option.selected { background: #8b5e3c; color: white; }
+    .agent-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; margin-top: 1rem; }
+    .book-selector { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; max-height: 200px; overflow-y: auto; padding: 0.5rem; border: 1px solid #f0e4d4; border-radius: 20px; background: white; }
+    .book-btn { background: #f5ede4; border: none; padding: 0.3rem 0.8rem; border-radius: 40px; cursor: pointer; font-size: 0.8rem; }
+    .book-btn.selected { background: #8b5e3c; color: white; }
+    .generated-preview { background: #2c241a; color: #f5e6d3; padding: 1rem; border-radius: 24px; margin-top: 1rem; text-align: center; }
+    .toast-msg { position: fixed; bottom: 20px; right: 20px; background: #1f2c1d; color: white; padding: 12px 24px; border-radius: 60px; z-index: 1000; animation: fadein 0.3s; }
+    @keyframes fadein { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    footer { background: #2c241a; color: #ddd; padding: 2rem; text-align: center; margin-top: 4rem; border-radius: 32px 32px 0 0; }
+    input, textarea, select { width: 100%; padding: 0.7rem; border-radius: 20px; border: 1px solid #e2d5c6; font-family: inherit; margin-top: 0.3rem; }
+    .upload-preview { max-width: 100px; max-height: 100px; margin-top: 10px; border-radius: 12px; }
+    .admin-panel { border: 2px solid #c49a6c; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="container">
+    <div class="nav-bar">
+      <div class="logo"><h1>✝️ HolyCanvas</h1><span>Upload Your Posters • AI Biblical Art</span></div>
+      <button class="menu-toggle" id="menuToggle">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="#products">📸 Posters</a>
+        <a href="#modern-bible">📖 Modern Bible</a>
+        <a href="#ethiopian-bible">📜 Ethiopian +22</a>
+        <a href="#ai-agents">🤖 AI Agents</a>
+        <a href="#checkout">💳 Checkout</a>
+        <div class="cart-icon"><i class="fas fa-shopping-cart"></i><span class="cart-count" id="cartCountBadge">0</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main class="container">
+  <div class="hero">
+    <h2>Your Posters. Infinite Inspiration.</h2>
+    <p>Upload your own PNGs, generate AI biblical art, or choose from 66+22 Bible books.</p>
+    <button class="btn-primary" style="margin-top:1.5rem;" onclick="document.getElementById('ai-agents').scrollIntoView({behavior:'smooth'})">Try AI Generator</button>
+  </div>
+
+  <!-- Products grid (dynamic, based on uploaded photos) -->
+  <section id="products" class="section">
+    <div class="section-title"><i class="fas fa-cross"></i> Your Posters (uploaded photos appear here)</div>
+    <div id="productsGrid" class="products-grid"></div>
+    <p style="font-size:0.8rem; margin-top:1rem;"><i class="fas fa-info-circle"></i> Add your PNGs via the secret admin page (<strong>#admin</strong> in URL).</p>
+  </section>
+
+  <!-- Cart -->
+  <div class="cart-section">
+    <div style="display: flex; justify-content: space-between;"><h3><i class="fas fa-shopping-basket"></i> Your Cart</h3><button id="clearCartBtn" class="btn-outline">Clear</button></div>
+    <div id="cartItemsList">Cart is empty</div>
+    <div style="display: flex; justify-content: space-between; margin-top: 1rem;"><strong>Total:</strong><span id="cartTotalPrice">R0.00</span></div>
+    <button id="scrollToCheckoutBtn" class="btn-primary" style="width:100%; margin-top:1rem;">Checkout ↓</button>
+  </div>
+
+  <!-- Modern Bible 66 books -->
+  <section id="modern-bible" class="section">
+    <div class="section-title">📜 Modern Bible – 66 Books</div>
+    <div class="agent-card"><div id="bibleBooksContainer" class="book-selector"></div><button id="generateCanonPosterBtn" class="btn-primary">Generate Visual Summary</button><div id="canonPosterPreview" class="generated-preview" style="display:none;"></div></div>
+  </section>
+
+  <!-- Ethiopian +22 removed books -->
+  <section id="ethiopian-bible" class="section">
+    <div class="section-title">📚 Ethiopian Bible – 22 Removed Books</div>
+    <div class="agent-card"><div id="ethiopianBooksContainer" class="book-selector"></div><button id="generateEthiopianPosterBtn" class="btn-primary">Generate Poster</button><div id="ethiopianPreview" class="generated-preview" style="display:none;"></div><p style="font-size:0.7rem;">Includes 1 Enoch, Jubilees, etc.</p></div>
+  </section>
+
+  <!-- AI Agents -->
+  <section id="ai-agents" class="section">
+    <div class="section-title">🤖 AI Biblical Art Generator</div>
+    <div class="agent-grid">
+      <div class="agent-card"><h3><i class="fas fa-magic"></i> Infinite HD Poster (your prompt)</h3><input type="text" id="aiPrompt" placeholder="e.g., Armor of God, Fruit of the Spirit, Jesus walks on water" value="Armor of God"><button id="generatePosterBtn" class="btn-primary" style="margin-top:0.5rem;">Generate Biblical Poster</button><div id="aiPosterPreview" class="generated-preview" style="display:none;"></div></div>
+      <div class="agent-card"><h3><i class="fas fa-palette"></i> Bible‑to‑Picture Agent</h3><p>Pick any book above – AI creates a visual summary.</p></div>
+    </div>
+  </section>
+
+  <!-- Checkout FNB EFT -->
+  <section id="checkout" class="checkout-section">
+    <h3>📦 Complete Order (ZAR)</h3>
+    <form id="checkoutForm">
+      <div style="display:grid; gap:1rem; grid-template-columns:1fr 1fr; margin-bottom:1rem;"><input type="text" id="fullName" placeholder="Full name" required><input type="email" id="email" placeholder="Email" required><input type="tel" id="phone" placeholder="Phone"><textarea id="address" rows="2" placeholder="Delivery address" required></textarea></div>
+      <div><strong>Payment Method</strong></div>
+      <div class="payment-methods"><div data-method="payfast" class="payment-option">PayFast</div><div data-method="stripe" class="payment-option">Stripe</div><div data-method="paypal" class="payment-option">PayPal</div><div data-method="eft" class="payment-option selected">Direct EFT → FNB</div></div>
+      <input type="hidden" id="selectedPayment" value="eft">
+      <div id="fnbDetails" style="background:#f8f2ea; padding:1rem; border-radius:20px; margin:1rem 0;"><strong>🏦 FNB Bank Transfer Details:</strong><br>Account: Christian Poster Shop CC | 62847900234 | Branch 250655 | SWIFT FIRNZAJJ<br><span id="orderRefDemo">Reference: HOLY-XXXXX</span></div>
+      <button type="submit" class="btn-primary" style="width:100%">Place Order (Demo)</button>
+    </form>
+  </section>
+
+  <!-- SECRET ADMIN PANEL (appears only when #admin is in URL) -->
+  <div id="adminPanel" class="admin-panel" style="display: none;">
+    <div class="section-title"><i class="fas fa-upload"></i> 🔐 Secret Admin – Upload Your Posters (PNG only)</div>
+    <p><strong>Your uploaded photos will appear in the shop above.</strong> You don’t need all 25 – upload as many as you have (max 25). Placeholders fill the rest.</p>
+    <div style="background: #f5ede4; border-radius: 24px; padding: 1rem; margin: 1rem 0;">
+      <h4>📤 Upload new poster</h4>
+      <input type="file" id="uploadImage" accept="image/png" style="margin-bottom: 0.5rem;">
+      <input type="text" id="uploadName" placeholder="Poster title (e.g., The Good Shepherd)" style="margin-bottom: 0.5rem;">
+      <input type="text" id="uploadVerse" placeholder="Bible verse (e.g., Psalm 23:1)" style="margin-bottom: 0.5rem;">
+      <button id="uploadBtn" class="btn-primary">Upload & Add to Shop</button>
+      <div id="uploadPreview" class="upload-preview"></div>
+    </div>
+    <div style="background: #f5ede4; border-radius: 24px; padding: 1rem;">
+      <h4>📋 Your uploaded posters (<span id="uploadCount">0</span>/25)</h4>
+      <div id="uploadedList" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;"></div>
+      <button id="resetUploadsBtn" class="btn-outline" style="margin-top: 1rem;">🗑️ Remove All My Uploads</button>
+      <p style="font-size: 0.7rem; margin-top: 1rem;"><i class="fas fa-info-circle"></i> All images are stored in your browser (localStorage). They will not disappear when you close the page.</p>
+    </div>
+  </div>
+</main>
+
+<footer>✝️ HolyCanvas — Upload your own PNGs | AI biblical art | R50 each</footer>
+
+<script>
+  // ---------- BIBLE LISTS ----------
+  const modernBooks = ["Genesis","Exodus","Leviticus","Numbers","Deuteronomy","Joshua","Judges","Ruth","1 Samuel","2 Samuel","1 Kings","2 Kings","1 Chronicles","2 Chronicles","Ezra","Nehemiah","Esther","Job","Psalms","Proverbs","Ecclesiastes","Song of Solomon","Isaiah","Jeremiah","Lamentations","Ezekiel","Daniel","Hosea","Joel","Amos","Obadiah","Jonah","Micah","Nahum","Habakkuk","Zephaniah","Haggai","Zechariah","Malachi","Matthew","Mark","Luke","John","Acts","Romans","1 Corinthians","2 Corinthians","Galatians","Ephesians","Philippians","Colossians","1 Thessalonians","2 Thessalonians","1 Timothy","2 Timothy","Titus","Philemon","Hebrews","James","1 Peter","2 Peter","1 John","2 John","3 John","Jude","Revelation"];
+  const ethiopianBooks = ["1 Enoch (Ethiopic)","2 Enoch","3 Enoch","Jubilees","1 Meqabyan","2 Meqabyan","3 Meqabyan","1 Baruch","2 Baruch","4 Baruch","Tobit","Judith","Wisdom of Solomon","Sirach","1 Esdras","2 Esdras","Prayer of Manasseh","Psalm 151","Additions to Daniel","Additions to Esther","Letter of Jeremiah","Joseph and Aseneth"];
+
+  // ---------- STORAGE KEYS ----------
+  const STORAGE_KEY = 'holycanvas_user_posters';  // array of user-uploaded posters
+  const CART_KEY = 'holy_cart_full';
+
+  // ---------- Load user posters from localStorage ----------
+  let userPosters = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  // Max 25 posters total (user uploads + placeholders)
+  const MAX_POSTERS = 25;
+
+  // ---------- Helper: get combined product list (user uploads + placeholders) ----------
+  function getCombinedProducts() {
+    let products = [];
+    // Add user uploaded posters
+    for (let i = 0; i < userPosters.length && i < MAX_POSTERS; i++) {
+      products.push(userPosters[i]);
+    }
+    // Fill remaining with placeholders
+    for (let i = products.length; i < MAX_POSTERS; i++) {
+      products.push({
+        id: 1000 + i,
+        name: `Placeholder Poster ${i+1}`,
+        verse: "Upload your own image via #admin",
+        price: 50,
+        image: `https://placehold.co/400x500/f0e4d4/8b5e3c?text=Add+Your+Poster+${i+1}`
+      });
+    }
+    return products;
+  }
+
+  // ---------- CART LOGIC (unchanged, uses product objects) ----------
+  let cart = JSON.parse(localStorage.getItem(CART_KEY)) || { items: [], totalQty: 0, totalPrice: 0 };
+  function saveCart() { localStorage.setItem(CART_KEY, JSON.stringify(cart)); updateCartUI(); }
+  function updateCartUI() {
+    const container = document.getElementById('cartItemsList');
+    if (!cart.items.length) { container.innerHTML = '<div style="padding:2rem; text-align:center;">Cart empty</div>'; document.getElementById('cartTotalPrice').innerText = 'R0.00'; document.getElementById('cartCountBadge').innerText = '0'; return; }
+    let html = '';
+    cart.items.forEach(item => {
+      html += `<div class="cart-item"><div><strong>${item.name}</strong><br><small>${item.verse||''}</small></div><div>R${item.price} x ${item.qty}</div><div>R${item.price*item.qty}</div><div><button class="btn-outline" data-id="${item.id}" data-op="inc">+</button><span>${item.qty}</span><button class="btn-outline" data-id="${item.id}" data-op="dec">-</button><button class="btn-outline" data-id="${item.id}" data-op="remove">🗑️</button></div></div>`;
+    });
+    container.innerHTML = html;
+    document.getElementById('cartTotalPrice').innerText = `R${cart.totalPrice}`;
+    document.getElementById('cartCountBadge').innerText = cart.totalQty;
+    document.querySelectorAll('[data-op]').forEach(btn => {
+      btn.addEventListener('click', (e) => { const id = parseInt(btn.dataset.id); const op = btn.dataset.op; if (op==='inc') modifyQty(id,1); else if (op==='dec') modifyQty(id,-1); else if (op==='remove') modifyQty(id,-999); });
+    });
+  }
+  function modifyQty(id, delta) {
+    const item = cart.items.find(i => i.id === id);
+    if (!item) return;
+    const newQty = item.qty + delta;
+    if (newQty <= 0) cart.items = cart.items.filter(i => i.id !== id);
+    else item.qty = newQty;
+    recalcTotals(); saveCart();
+  }
+  function addToCart(product) {
+    const existing = cart.items.find(i => i.id === product.id);
+    if (existing) existing.qty++;
+    else cart.items.push({ ...product, qty: 1 });
+    recalcTotals(); saveCart();
+    showToast(`✨ ${product.name} added to cart`);
+  }
+  function recalcTotals() { cart.totalQty = cart.items.reduce((s,i)=>s+i.qty,0); cart.totalPrice = cart.items.reduce((s,i)=>s+(i.price*i.qty),0); }
+  function clearCart() { cart = { items: [], totalQty: 0, totalPrice: 0 }; saveCart(); showToast("Cart cleared"); }
+  function showToast(msg) { const t = document.createElement('div'); t.className = 'toast-msg'; t.innerText = msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+
+  // Render products grid
+  function renderProducts() {
+    const products = getCombinedProducts();
+    const grid = document.getElementById('productsGrid');
+    grid.innerHTML = products.map(p => `
+      <div class="product-card">
+        <img class="product-img" src="${p.image}" alt="${p.name}" onerror="this.src='https://placehold.co/400x500/f0e4d4/8b5e3c?text=Error'">
+        <div class="product-info">
+          <div class="product-title">${p.name}</div>
+          <div class="product-verse" style="font-size:0.75rem; color:#9b7b5c;">${p.verse || ''}</div>
+          <div class="price">R${p.price}</div>
+          <button class="btn-primary add-cart-btn" data-id="${p.id}">Add to Cart</button>
+        </div>
+      </div>
+    `).join('');
+    document.querySelectorAll('.add-cart-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = parseInt(btn.dataset.id);
+        const prod = products.find(p => p.id === id);
+        if (prod) addToCart(prod);
+      });
+    });
+  }
+
+  // Populate book selectors
+  function populateBooks(containerId, booksArray) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = booksArray.map(book => `<button class="book-btn" data-book="${book}">${book}</button>`).join('');
+    container.querySelectorAll('.book-btn').forEach(btn => btn.addEventListener('click', () => { container.querySelectorAll('.book-btn').forEach(b=>b.classList.remove('selected')); btn.classList.add('selected'); }));
+  }
+
+  // ---------- BIBLICAL IMAGE GENERATION ----------
+  function getBiblicalImageUrl(prompt) {
+    const p = prompt.toLowerCase();
+    if (p.includes("armor of god")) return "https://images.unsplash.com/photo-1504805572947-34fad45aed93?w=500&h=600&fit=crop";
+    if (p.includes("fruit of the spirit")) return "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&h=600&fit=crop";
+    if (p.includes("jesus walks on water")) return "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=500&h=600&fit=crop";
+    if (p.includes("good shepherd")) return "https://images.unsplash.com/photo-1504280317859-c2d6d5b2a3b7?w=500&h=600&fit=crop";
+    if (p.includes("creation")) return "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=500&h=600&fit=crop";
+    return "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=500&h=600&fit=crop";
+  }
+  function generateBiblicalPoster(prompt, previewDivId, customName) {
+    const previewDiv = do
