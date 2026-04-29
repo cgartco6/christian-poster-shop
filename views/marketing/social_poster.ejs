@@ -1,0 +1,65 @@
+<!-- views/marketing/social-poster.ejs -->
+<div class="container">
+    <h1>Social Media Poster</h1>
+    
+    <div class="marketing-nav">
+        <a href="/marketing/dashboard">Dashboard</a>
+        <a href="/marketing/campaigns">Campaigns</a>
+        <a href="/marketing/social-poster" class="active">Social Poster</a>
+        <a href="/marketing/landing-builder">Landing Builder</a>
+        <a href="/marketing/analytics">Analytics</a>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <div style="background: white; padding: 1.5rem; border-radius: 10px;">
+            <h3>Create Post</h3>
+            <div class="form-group">
+                <label>Platforms</label>
+                <label><input type="checkbox" name="platforms" value="facebook"> Facebook</label>
+                <label><input type="checkbox" name="platforms" value="instagram"> Instagram</label>
+                <label><input type="checkbox" name="platforms" value="tiktok"> TikTok</label>
+            </div>
+            <div class="form-group">
+                <label>Message</label>
+                <textarea id="post-message" rows="4" class="form-control" placeholder="Enter your post content..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Media URL (optional)</label>
+                <input type="text" id="post-media" placeholder="https://example.com/image.jpg">
+            </div>
+            <button id="post-now-btn" class="btn btn-primary">Post Now</button>
+            <button id="schedule-post-btn" class="btn btn-secondary">Schedule</button>
+        </div>
+        
+        <div>
+            <h3>AI Best Posting Times</h3>
+            <div style="background: white; padding: 1.5rem; border-radius: 10px;">
+                <% if (bestTimes) { %>
+                    <% Object.entries(bestTimes).forEach(([platform, times]) => { %>
+                        <h4><%= platform %></h4>
+                        <p>Best Days: <%= times.bestDays ? times.bestDays.join(', ') : 'Any' %></p>
+                        <p>Best Hours: <%= times.bestHours ? times.bestHours.join(', ') : 'Anytime' %></p>
+                        <p>Frequency: <%= times.frequency %></p>
+                        <p>Next Optimal: <%= times.nextOptimalTime || 'Now' %></p>
+                        <hr>
+                    <% }) %>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    
+    <h3 style="margin-top: 2rem;">Connected Platforms</h3>
+    <div class="platform-status">
+        <% if (connectedPlatforms) { %>
+            <div class="platform-badge <%= connectedPlatforms.facebook ? 'online' : '' %>">
+                Facebook: <%= connectedPlatforms.facebook ? '✅ Connected' : '❌ Not Configured' %>
+            </div>
+            <div class="platform-badge <%= connectedPlatforms.instagram ? 'online' : '' %>">
+                Instagram: <%= connectedPlatforms.instagram ? '✅ Connected' : '❌ Not Configured' %>
+            </div>
+            <div class="platform-badge <%= connectedPlatforms.tiktok ? 'online' : '' %>">
+                TikTok: <%= connectedPlatforms.tiktok ? '✅ Connected' : '❌ Not Configured' %>
+            </div>
+        <% } %>
+    </div>
+</div>
