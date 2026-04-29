@@ -1,0 +1,29 @@
+{
+  "name": "christian-poster-shop",
+  "version": "1.0.0",
+  "description": "E-commerce for Christian and Biblical posters with marketing engine",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "express-ejs-layouts": "^2.5.1",
+    "ejs": "^3.1.9",
+    "dotenv": "^16.3.1",
+    "body-parser": "^1.20.2",
+    "stripe": "^13.5.0",
+    "paypal-rest-sdk": "^1.8.1",
+    "axios": "^1.5.0",
+    "node-cron": "^3.0.2",
+    "uuid": "^9.0.1",
+    "moment": "^2.29.4",
+    "bcrypt": "^5.1.1",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
